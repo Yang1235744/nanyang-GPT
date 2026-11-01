@@ -36,7 +36,13 @@ python -m nanyang_gpt.chat --ckpt runs/nanyang_gpt/latest_gpt.pt
 | --- | --- | --- |
 | 格式 | **GGUF**（gpt2 架构家族） | **PyTorch checkpoint**（.pt） |
 | 适合 | Ollama / llama.cpp 等本地运行时 | 任意 PyTorch 项目、Helios 1.5 捆绑、二次开发 |
-| 获取 | 训练后自行转换（见下），或从 Releases 下载 | `git clone` 本仓库 + Releases 下载 .pt |
+| 获取 | 训练后自行转换（见下），或直接下载现成 GGUF | `git clone` 本仓库 + 下载现成 .pt |
+
+现成权重（`.pt` 与 `.gguf` 双格式，永久直链，无需注册）：
+
+```
+https://share.fnnas.net/s/90de87a72789493597
+```
 
 ### 通道一：转成 GGUF 接 Ollama
 
