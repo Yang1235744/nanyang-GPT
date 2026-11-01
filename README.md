@@ -28,6 +28,37 @@ python -m nanyang_gpt.train --config configs/nanyang_gpt_medium.yaml
 python -m nanyang_gpt.chat --ckpt runs/nanyang_gpt/latest_gpt.pt
 ```
 
+## 两种格式 · 两个通道
+
+同一个模型，两种格式，各走各的通道：
+
+| | 通道一：Ollama | 通道二：通用 |
+| --- | --- | --- |
+| 格式 | **GGUF**（gpt2 架构家族） | **PyTorch checkpoint**（.pt） |
+| 适合 | Ollama / llama.cpp 等本地运行时 | 任意 PyTorch 项目、Helios 1.5 捆绑、二次开发 |
+| 获取 | 训练后自行转换（见下），或从 Releases 下载 | `git clone` 本仓库 + Releases 下载 .pt |
+
+### 通道一：转成 GGUF 接 Ollama
+
+```bash
+pip install gguf
+python -m nanyang_gpt.convert_gguf --ckpt runs/nanyang_gpt/latest_gpt.pt \
+    --out nanyang-gpt-f16.gguf --ftype f16
+
+ollama create nanyang-gpt -f Modelfile
+ollama run nanyang-gpt
+```
+
+南阳 GPT 的拓扑与 GPT-2 一致（可学习位置嵌入、pre-norm、qkv 合一投影、GELU MLP、
+嵌入共享），转换器会按 gpt2 架构落盘，tokenizer 用字节级词表（0-255 = UTF-8 字节），
+llama.cpp 的 BPE 编解码天然兼容。
+
+### 通道二：PyTorch 通用
+
+`.pt` checkpoint 就是标准 `state_dict`，任何 PyTorch 项目 `torch.load` 即用；
+与 [nanyang-Helios1.5](https://github.com/Yang1235744/nanyang-Helios1.5) 内置的
+`helios/models/nanyang_gpt.py` 同架构同配置，权重直接互换。
+
 ## 工具调用
 
 语料里教会模型在该生成时输出标记，运行时解析：

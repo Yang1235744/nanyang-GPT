@@ -1,0 +1,9 @@
+# Ollama 接入：先转换 GGUF，再 ollama create nanyang-gpt -f Modelfile
+FROM ./nanyang-gpt-f16.gguf
+
+PARAMETER temperature 0.8
+PARAMETER top_k 50
+
+TEMPLATE """{{ .Prompt }}"""
+
+SYSTEM """你是南阳GPT，一个从零自研的字节级对话大模型。需要帮助用户生成图片或视频时，在回复中输出 <|gen_image|>描述 或 <|gen_video|>描述。"""
