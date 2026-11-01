@@ -1,0 +1,26 @@
+# 南阳 GPT 演示配置 —— CPU 也能几分钟跑通全链路，用来验证管线
+# 正式聊天能力请用 nanyang_gpt_medium.yaml + 足量语料
+model_name: nanyang-GPT-demo
+seed: 42
+
+gpt:
+  dim: 256
+  depth: 4
+  heads: 4
+  max_len: 256
+  vocab_size: 259
+
+vision:            # 看图模块（可整段删除退回纯文本模式）
+  base: 32
+  image_size: 64   # 64px -> 64 个视觉 token
+
+train:
+  corpus_dir: data/corpus
+  batch_size: 4
+  num_steps: 2000
+  lr: 1.0e-3
+  weight_decay: 0.01
+  grad_clip: 1.0
+  log_every: 50
+  save_every: 400
+  out_dir: runs/nanyang_gpt_demo
