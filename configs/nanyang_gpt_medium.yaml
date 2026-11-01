@@ -1,0 +1,21 @@
+# 南阳 GPT 中等配置 —— 与 nanyang-Helios1.5 捆绑版同架构，权重可直接互换
+model_name: nanyang-GPT
+seed: 42
+
+gpt:
+  dim: 1024
+  depth: 24
+  heads: 16
+  max_len: 2048
+  vocab_size: 259
+
+train:
+  corpus_dir: data/corpus      # 对话语料目录，放 .txt 文件
+  batch_size: 8
+  num_steps: 20000
+  lr: 2.0e-4
+  weight_decay: 0.01
+  grad_clip: 1.0
+  log_every: 50
+  save_every: 1000
+  out_dir: runs/nanyang_gpt
